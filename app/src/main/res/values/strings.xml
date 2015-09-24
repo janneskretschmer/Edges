@@ -1,11 +1,27 @@
 <resources>
     <string name="app_name">Edges</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="back">Zurück</string>
+
     <string name="login">Login</string>
     <string name="name">Name</string>
     <string name="password">Passwort</string>
+    <string name="confirm_password">Passwort wiederholen</string>
     <string name="new_account">Neues Konto</string>
+    <string name="create_account">Konto erstellen</string>
+    <string name="login_title">Bitte anmelden</string>
+
+    <string name="player_1">Spieler 1</string>
+    <string name="player_2">Spieler 2</string>
+
+    <string name="error_no_name">Bitte gebe deinen Namen ein.</string>
+    <string name="error_no_password">Bitte gebe dein Passwort ein.</string>
+    <string name="error_no_confirm">Bitte wiederhole dein Passwort.</string>
+    <string name="error_false_credentials">Deine Angaben stimmen leider nicht überein.</string>
+    <string name="error_passwords_no_match">Die Passwörter stimmen nicht überein.</string>
+    <string name="error_name_exists">Der Name exitiert leider schon.</string>
+    <string name="error_account_logged_in">Dieses Konto ist schon angemeldet.</string>
+
+    <string name="title_activity_new_account">NewAccountActivity</string>
 
 </resources>
