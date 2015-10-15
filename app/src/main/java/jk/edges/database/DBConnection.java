@@ -80,39 +80,6 @@ public class DBConnection extends SQLiteOpenHelper {
         return db.insert("user", null, contentValues) >= 0;
     }
 
-    /*public Cursor getData(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from contacts where id="+id+"", null );
-        return res;
-    }*/
-
-    /*public int numberOfRows(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, CONTACTS_TABLE_NAME);
-        return numRows;
-    }*/
-
-    /*public boolean updateContact (Integer id, String name, String phone, String email, String street,String place)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-        contentValues.put("phone", phone);
-        contentValues.put("email", email);
-        contentValues.put("street", street);
-        contentValues.put("place", place);
-        db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
-        return true;
-    }*/
-
-    /*public Integer deleteContact (Integer id)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("contacts",
-                "id = ? ",
-                new String[] { Integer.toString(id) });
-    }*/
-
     public int validatePassword(String name,String password){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "SELECT id,salt,password FROM user WHERE name = ?", new String[]{name} );

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import jk.edges.R;
 import jk.edges.database.DBConnection;
+import jk.edges.model.Playground;
 
 public class LoginActivity extends Activity {
     private TextView title, newAccount,error,header;
@@ -24,6 +25,7 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
@@ -74,7 +76,10 @@ public class LoginActivity extends Activity {
                         }else{
                             if(player1==id)error.setText(R.string.error_account_logged_in);
                             else{
-                                //TODO continue
+                                Intent intent = new Intent(getApplicationContext(),GameActivity.class);
+                                intent.putExtra("id1",player1);
+                                intent.putExtra("id2",id);
+                                startActivity(intent);
                             }
                         }
                     }

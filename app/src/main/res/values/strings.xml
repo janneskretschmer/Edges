@@ -23,5 +23,9 @@
     <string name="error_account_logged_in">Dieses Konto ist schon angemeldet.</string>
 
     <string name="title_activity_new_account">NewAccountActivity</string>
+    <string name="title_activity_game">GameActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
