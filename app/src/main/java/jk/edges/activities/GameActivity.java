@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import jk.edges.R;
 import jk.edges.model.Playground;
+import jk.edges.view.PlaygroundView;
 
 public class GameActivity extends Activity {
     private Playground playground;
@@ -31,11 +32,19 @@ public class GameActivity extends Activity {
         String playgroundString = "BEBNN\nENENE\nBEBEB\nENENE\nNNBEB";
         playground.parse(playgroundString);
 
-        playground.claim(1, 0, id1);
+        /*playground.claim(1, 0, id1);
         playground.claim(0, 1, id2);
         playground.claim(4, 1, id1);
+        playground.claim(1, 2, id1);
+        playground.claim(2, 1, id1);
+        playground.claim(2, 3, id1);
+        playground.claim(3, 2, id1);
 
-        Log.d("pg",playground.stringify());
+        Log.d("pg","\n"+playground.stringify());*/
+
+        PlaygroundView playgroundView = (PlaygroundView)findViewById(R.id.playground);
+        playgroundView.setPlayground(playground);
+        playgroundView.draw();
     }
 
     @Override
