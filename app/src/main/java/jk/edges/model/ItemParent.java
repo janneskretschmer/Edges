@@ -31,7 +31,7 @@ public abstract class ItemParent {
     public abstract boolean claim(int id);
 
     public boolean isClaimed(){
-        return owner>-1;
+        return owner > -1;
     }
     public int getOwner(){
         return owner;
