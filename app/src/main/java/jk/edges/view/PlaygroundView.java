@@ -10,14 +10,14 @@ import android.widget.LinearLayout;
 import java.util.Random;
 
 import jk.edges.model.Playground;
-import jk.edges.model.PlaygroundItem;
+import jk.edges.model.ItemParent;
 import jk.edges.model.Type;
 
 /**
  * Created by janne on 13.10.2015.
  */
 public class PlaygroundView extends LinearLayout{
-    private PlaygroundItem[][] items;
+    private ItemParent[][] items;
     private Context context;
 
     public PlaygroundView(Context context) {

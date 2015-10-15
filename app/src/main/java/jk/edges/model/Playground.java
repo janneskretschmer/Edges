@@ -1,8 +1,5 @@
 package jk.edges.model;
 
-import android.graphics.Point;
-import android.util.Log;
-
 /**
  * Created by janne on 24.09.2015.
  */
@@ -11,11 +8,11 @@ public class Playground {
     //edges are vertical in rows with boxes
     //edges are horizontal in rows without boxes
     //in horizontal rows only every second item is a edge
-    private PlaygroundItem[][] items;
+    private ItemParent[][] items;
     private int id1,id2;
 
     public Playground(int boxWidth,int boxHeight,int id1,int id2){
-        items=new PlaygroundItem[boxWidth*2+1][boxHeight*2+1];
+        items=new ItemParent[boxWidth*2+1][boxHeight*2+1];
         this.id1=id1;
         this.id2=id2;
     }
@@ -36,7 +33,7 @@ public class Playground {
     // it has to be a rectangle
     public void parse(String map){
         String[] temp = map.split("\\r?\\n");
-        items = new PlaygroundItem[temp.length][temp[0].length()];
+        items = new ItemParent[temp.length][temp[0].length()];
         for (int y = 0; y < temp.length; y++) {
             for (int x = 0; x < temp[0].length(); x++) {
                 char c = temp[y].charAt(x);
@@ -92,7 +89,7 @@ public class Playground {
         return sb.toString();
     }
 
-    public PlaygroundItem[][] getItems() {
+    public ItemParent[][] getItems() {
         return items;
     }
 
@@ -103,7 +100,7 @@ public class Playground {
      * @param id
      * @return affected items, if null or length 0 nothing changed
      */
-    public PlaygroundItem[] claim(int x,int y,int id){
+    public ItemParent[] claim(int x,int y,int id){
         if(items[y][x]==null)return null;
 
         // a player can only claim an unclaimed edge directly

@@ -3,7 +3,7 @@ package jk.edges.model;
 /**
  * Created by janne on 24.09.2015.
  */
-public class Box extends PlaygroundItem {
+public class Box extends ItemParent {
     private int claimedEdges = 0;
     private int edgeCount = 4;
 
