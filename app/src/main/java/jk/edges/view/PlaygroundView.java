@@ -3,12 +3,14 @@ package jk.edges.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.Random;
 
+import jk.edges.R;
 import jk.edges.model.Playground;
 import jk.edges.model.ItemParent;
 import jk.edges.model.Type;
@@ -18,7 +20,9 @@ import jk.edges.model.Type;
  */
 public class PlaygroundView extends LinearLayout{
     private ItemParent[][] items;
+    private int id1,id2;
     private Context context;
+
 
     public PlaygroundView(Context context) {
         this(context, null);
@@ -33,6 +37,13 @@ public class PlaygroundView extends LinearLayout{
         this.context = context;
         setOrientation(HORIZONTAL);
         items = null;
+        id1 = -1;
+        id2 = -1;
+    }
+
+    public void setIds(int id1,int id2){
+        this.id1 = id1;
+        this.id2 = id2;
     }
 
     public void setPlayground(Playground playground) {
@@ -42,8 +53,8 @@ public class PlaygroundView extends LinearLayout{
     public void draw(){
         if(items == null || items.length<1)return;
         if(getChildCount()==0){//add new views to layout
-            int edgeWidth = 50;//width of a horizontal edge
-            int edgeHeight = 10;//height of a horizontal edge
+            int edgeWidth = 100;//width of a horizontal edge
+            int edgeHeight = 40;//height of a horizontal edge
 
             int[] widths = new int[items[0].length];
             int[] heights = new int[items.length];
@@ -77,28 +88,32 @@ public class PlaygroundView extends LinearLayout{
 
                     if(items[y][x] == null){
                         int surroundingItems = 0;
-                        int width = 0;
-                        int height = 0;
-                        if(x>0&&items[y][x-1]!=null){//left item
-                            surroundingItems++;
-                            if (items[y][x - 1].getType() == Type.Edge)height=edgeHeight;
-                            else height = edgeWidth;
+                        if(x>0&&items[y][x-1]!=null)surroundingItems++;//left item
+                        if(y>0&&items[y-1][x]!=null)surroundingItems++;//upper item
+                        if(x+1<items[y].length&&items[y][x+1]!=null)surroundingItems++;//right item
+                        if(y+1<items.length&&items[y+1][x]!=null)surroundingItems++;//lower item
+                        if(x>0&&y>0&&items[y-1][x-1]!=null)surroundingItems++;//upper left item
+                        if(x>0&&y+1<items.length&&items[y+1][x-1]!=null)surroundingItems++;//lower left item
+                        if(x+1<items[y].length&&y+1<items.length&&items[y+1][x+1]!=null)surroundingItems++;//lower right item
+                        if(x+1<items[y].length&&y>0&&items[y-1][x+1]!=null)surroundingItems++;//upper right item
+
+                        if(surroundingItems>7){//edge cross
+                            item.setBackgroundColor(getResources().getColor(R.color.dark_gray));//I have to use the deprecated Method, because the new one is not available for Android L
+                        }else if(surroundingItems>0){//border
+                            item.setBackgroundColor(getResources().getColor(R.color.black));
+                        }else{//outside
+                            item.setBackgroundColor(getResources().getColor(R.color.lighter_gray));
                         }
-                        if(y>0&&items[y-1][x]!=null){//upper item
-                            surroundingItems++;
-                            if (items[y-1][x].getType() == Type.Edge)width=edgeHeight;
-                            else width = edgeWidth;
-                        }
-                        if(x+1<items[y].length&&items[y][x+1]!=null){//right item
-                            surroundingItems++;
-                            if (items[y][x+1].getType() == Type.Edge)height=edgeHeight;
-                            else height = edgeWidth;
-                        }
-                        if(y+1<items.length&&items[y+1][x]!=null)if(x+1<items[y].length&&items[y][x+1]!=null){//lower item
-                            surroundingItems++;
-                            if (items[y+1][x].getType() == Type.Edge)width=edgeHeight;
-                            else width = edgeWidth;
-                        }
+                    }else if(items[y][x].getType()==Type.Box){
+                        if(items[y][x].isClaimed()){
+                            if (items[y][x].getOwner()==id1&&id1>=0)item.setBackgroundColor(getResources().getColor(R.color.blue));
+                            else if (items[y][x].getOwner()==id2&&id2>=0)item.setBackgroundColor(getResources().getColor(R.color.red));
+                        }else item.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                    }else if(items[y][x].getType()==Type.Edge){
+                        if(items[y][x].isClaimed()){
+                            if (items[y][x].getOwner()==id1&&id1>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_blue));
+                            else if (items[y][x].getOwner()==id2&&id2>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_red));
+                        }else item.setBackgroundColor(getResources().getColor(R.color.gray));
                     }
                 }
             }

@@ -29,7 +29,7 @@ public class GameActivity extends Activity {
 
         playground = new Playground(id1,id2);
 
-        String playgroundString = "BEBNN\nENENE\nBEBEB\nENENE\nNNBEB";
+        String playgroundString = "NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN";
         playground.parse(playgroundString);
 
         /*playground.claim(1, 0, id1);
