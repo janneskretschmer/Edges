@@ -1,5 +1,9 @@
 package jk.edges.model;
 
+import android.graphics.Point;
+
+import java.util.ArrayList;
+
 /**
  * Created by janne on 24.09.2015.
  */
@@ -100,18 +104,32 @@ public class Playground {
      * @param id
      * @return affected items, if null or length 0 nothing changed
      */
-    public ItemParent[] claim(int x,int y,int id){
+    public ArrayList<Point> claim(int x,int y,int id){
         if(items[y][x]==null)return null;
 
         // a player can only claim an unclaimed edge directly
+        ArrayList<Point> affectedItems = new ArrayList<>();
         if(items[y][x].getType()==Type.Edge&&!items[y][x].isClaimed()){
             items[y][x].claim(id);
+            affectedItems.add(new Point(x,y));
             //increment claim count for surrounding boxes
-            if(x>0&&items[y][x-1]!=null)items[y][x-1].claim(id);
-            if(y>0&&items[y-1][x]!=null)items[y-1][x].claim(id);
-            if(x+1<items[y].length&&items[y][x+1]!=null)items[y][x+1].claim(id);
-            if(y+1<items.length&&items[y+1][x]!=null)items[y+1][x].claim(id);
+            if(x>0&&items[y][x-1]!=null){
+                items[y][x-1].claim(id);
+                affectedItems.add(new Point(x-1, y));
+            }
+            if(y>0&&items[y-1][x]!=null){
+                items[y-1][x].claim(id);
+                affectedItems.add(new Point(x, y-1));
+            }
+            if(x+1<items[y].length&&items[y][x+1]!=null){
+                items[y][x+1].claim(id);
+                affectedItems.add(new Point(x+1, y));
+            }
+            if(y+1<items.length&&items[y+1][x]!=null){
+                items[y+1][x].claim(id);
+                affectedItems.add(new Point(x, y+1));
+            }
         }
-        return null;
+        return affectedItems;
     }
 }

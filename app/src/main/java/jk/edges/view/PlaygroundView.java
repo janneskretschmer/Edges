@@ -2,12 +2,14 @@ package jk.edges.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import jk.edges.R;
@@ -22,6 +24,7 @@ public class PlaygroundView extends LinearLayout{
     private ItemParent[][] items;
     private int id1,id2;
     private Context context;
+    private View[] edges;
 
 
     public PlaygroundView(Context context) {
@@ -73,6 +76,8 @@ public class PlaygroundView extends LinearLayout{
                     }
                 }
             }
+
+            ArrayList<View> edgeList = new ArrayList<>();
             //add views
             for (int x = 0;x  < items[0].length; x++) {
                 for (int y = 0; y < items.length; y++) {
@@ -82,6 +87,8 @@ public class PlaygroundView extends LinearLayout{
                     layoutParams.width = widths[x];
                     layoutParams.height= heights[y];
                     item.setLayoutParams(layoutParams);
+                    item.setTag(R.dimen.x,x);
+                    item.setTag(R.dimen.y, y);
 
                     Random rnd = new Random();
                     item.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
@@ -105,11 +112,15 @@ public class PlaygroundView extends LinearLayout{
                             item.setBackgroundColor(getResources().getColor(R.color.lighter_gray));
                         }
                     }else if(items[y][x].getType()==Type.Box){
+                        item.setTag(R.dimen.type, Type.Box);
                         if(items[y][x].isClaimed()){
                             if (items[y][x].getOwner()==id1&&id1>=0)item.setBackgroundColor(getResources().getColor(R.color.blue));
                             else if (items[y][x].getOwner()==id2&&id2>=0)item.setBackgroundColor(getResources().getColor(R.color.red));
                         }else item.setBackgroundColor(getResources().getColor(R.color.light_gray));
                     }else if(items[y][x].getType()==Type.Edge){
+                        item.setTag(R.dimen.type, Type.Edge);
+                        edgeList.add(item);
+
                         if(items[y][x].isClaimed()){
                             if (items[y][x].getOwner()==id1&&id1>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_blue));
                             else if (items[y][x].getOwner()==id2&&id2>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_red));
@@ -117,6 +128,33 @@ public class PlaygroundView extends LinearLayout{
                     }
                 }
             }
+            edges = new View[edgeList.size()];
+            edgeList.toArray(edges);
         }
+    }
+
+    public void updateViews(ArrayList<Point> points){
+        //TODO not working!
+        for (int i = 0; i < points.size(); i++) {
+            View view = ((LinearLayout)getChildAt(points.get(i).x)).getChildAt(points.get(i).y);
+            int owner = items[(int)view.getTag(R.dimen.y)][(int)view.getTag(R.dimen.x)].getOwner();
+            if(view.getTag(R.dimen.type).equals(Type.Edge)){
+                if(owner == id1)view.setBackgroundColor(getResources().getColor(R.color.edge_blue));
+                else if(owner == id2)view.setBackgroundColor(getResources().getColor(R.color.edge_red));
+                else view.setBackgroundColor(getResources().getColor(R.color.gray));
+                Log.d(owner+"","edge "+view.getTag(R.dimen.x)+" "+view.getTag(R.dimen.y));
+
+            }else if(view.getTag(R.dimen.type).equals(Type.Box)){
+                if(owner == id1)view.setBackgroundColor(getResources().getColor(R.color.blue));
+                else if(owner == id2)view.setBackgroundColor(getResources().getColor(R.color.red));
+                else view.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                Log.d(owner+"","box "+view.getTag(R.dimen.x)+" "+view.getTag(R.dimen.y));
+            }
+            Log.d("type",view.getTag(R.dimen.type)+"");
+        }
+    }
+
+    public View[] getEdges() {
+        return edges;
     }
 }
