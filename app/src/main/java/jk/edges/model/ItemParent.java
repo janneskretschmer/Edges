@@ -28,7 +28,7 @@ public abstract class ItemParent {
         return type;
     }
 
-    public abstract boolean claim(int id);
+    public abstract int claim(int id);
 
     public boolean isClaimed(){
         return owner > -1;

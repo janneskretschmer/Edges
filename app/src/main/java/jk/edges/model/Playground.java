@@ -13,7 +13,7 @@ public class Playground {
     //edges are horizontal in rows without boxes
     //in horizontal rows only every second item is a edge
     private ItemParent[][] items;
-    private int id1,id2;
+    private int id1,id2,score1,score2;
 
     public Playground(int boxWidth,int boxHeight,int id1,int id2){
         items=new ItemParent[boxWidth*2+1][boxHeight*2+1];
@@ -29,6 +29,8 @@ public class Playground {
         items=null;
         id1=-1;
         id2=-1;
+        score1 = 0;
+        score2 = 0;
     }
 
     // E:edge F:Player1 G:Player2
@@ -48,8 +50,14 @@ public class Playground {
                     else if(c=='G'&&id2>-1)((Edge)items[y][x]).claim(id2);
                 }else if(c=='B'||c=='C'||c=='D'){
                     items[y][x]=new Box(x,y);
-                    if(c=='D'&&id1>-1)((Box)items[y][x]).setOwner(id1);
-                    else if(c=='D'&&id2>-1)((Box)items[y][x]).setOwner(id2);
+                    if(c=='D'&&id1>-1){
+                        ((Box)items[y][x]).setOwner(id1);
+                        score1++;
+                    }
+                    else if(c=='D'&&id2>-1){
+                        ((Box)items[y][x]).setOwner(id2);
+                        score2++;
+                    }
                 }
             }
         }
@@ -112,24 +120,38 @@ public class Playground {
         if(items[y][x].getType()==Type.Edge&&!items[y][x].isClaimed()){
             items[y][x].claim(id);
             affectedItems.add(new Point(x,y));
+
+            boolean isP1 = id==id1;
             //increment claim count for surrounding boxes
             if(x>0&&items[y][x-1]!=null){
-                items[y][x-1].claim(id);
+                if(isP1)score1 += items[y][x-1].claim(id);
+                else score2 += items[y][x-1].claim(id);
                 affectedItems.add(new Point(x-1, y));
             }
             if(y>0&&items[y-1][x]!=null){
-                items[y-1][x].claim(id);
+                if(isP1)score1 += items[y-1][x].claim(id);
+                else score2 += items[y-1][x].claim(id);
                 affectedItems.add(new Point(x, y-1));
             }
             if(x+1<items[y].length&&items[y][x+1]!=null){
-                items[y][x+1].claim(id);
+                if(isP1)score1 += items[y][x+1].claim(id);
+                else score2 += items[y][x+1].claim(id);
                 affectedItems.add(new Point(x+1, y));
             }
             if(y+1<items.length&&items[y+1][x]!=null){
-                items[y+1][x].claim(id);
+                if(isP1)score1 += items[y+1][x].claim(id);
+                else score2 += items[y+1][x].claim(id);
                 affectedItems.add(new Point(x, y+1));
             }
         }
         return affectedItems;
+    }
+
+    public int getScore1() {
+        return score1;
+    }
+
+    public int getScore2() {
+        return score2;
     }
 }

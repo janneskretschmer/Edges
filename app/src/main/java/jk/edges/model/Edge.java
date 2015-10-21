@@ -9,8 +9,8 @@ public class Edge extends ItemParent {
     }
 
     @Override
-    public boolean claim(int id){
+    public int claim(int id){
         owner = id;
-        return true;
+        return 0;
     }
 }

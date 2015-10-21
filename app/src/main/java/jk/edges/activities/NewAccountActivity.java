@@ -20,6 +20,7 @@ public class NewAccountActivity extends Activity {
     private TextView back,error;
     private DBConnection dbConnection;
     private int player1;
+    private String name1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class NewAccountActivity extends Activity {
         setContentView(R.layout.activity_new_account);
 
         player1= getIntent().getIntExtra("player_1",-1);
+        name1= getIntent().getStringExtra("name1");
 
         //init views
         name = (EditText)findViewById(R.id.name);
@@ -69,6 +71,7 @@ public class NewAccountActivity extends Activity {
     private void goBack(){
         Intent intent = new Intent(this,LoginActivity.class);
         intent.putExtra("player_1",player1);
+        intent.putExtra("name1",name1);
         startActivity(intent);
         finish();
     }

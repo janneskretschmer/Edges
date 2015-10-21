@@ -22,6 +22,7 @@ public class LoginActivity extends Activity {
     private EditText name,password;
     private DBConnection dbConnection;
     private int player1;
+    private String name1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class LoginActivity extends Activity {
             header.setText(R.string.player_2);
             header.setTextColor(getResources().getColor(R.color.red));
         }
+        name1 = getIntent().getStringExtra("name1");
 
 
         //set actions
@@ -69,6 +71,7 @@ public class LoginActivity extends Activity {
                     }else{
                         if(player1<0){
                             player1=id;
+                            name1 = userName;
                             resetViews();
                             header.setText(R.string.player_2);
                             header.setTextColor(getResources().getColor(R.color.red));
@@ -79,6 +82,8 @@ public class LoginActivity extends Activity {
                                 Intent intent = new Intent(getApplicationContext(),GameActivity.class);
                                 intent.putExtra("id1",player1);
                                 intent.putExtra("id2",id);
+                                intent.putExtra("name1",name1);
+                                intent.putExtra("name2",userName);
                                 startActivity(intent);
                             }
                         }
@@ -92,6 +97,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),NewAccountActivity.class);
                 intent.putExtra("player_1",player1);
+                intent.putExtra("name1",name1);
                 startActivity(intent);
             }
         });

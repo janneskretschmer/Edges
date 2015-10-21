@@ -15,12 +15,12 @@ public class Box extends ItemParent {
      *
      * @return if box is fully surrounded by claimed edges
      */
-    @Override public boolean claim(int id){
+    @Override public int claim(int id){
         if(++claimedEdges == edgeCount) {
             owner = id;
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
 
     public boolean isClaimed(){

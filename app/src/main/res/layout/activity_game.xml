@@ -14,7 +14,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:rotation="180"
-        android:text="0"/>
+        android:text="0"
+        android:textSize="30sp"
+        android:textColor="@color/blue"/>
     <TextView
         android:id="@+id/player1"
         android:layout_toRightOf="@+id/score1"
@@ -23,7 +25,9 @@
         android:layout_alignParentTop="true"
         android:layout_height="50sp"
         android:rotation="180"
-        android:text="@string/player_1"/>
+        android:text="@string/player_1"
+        android:textSize="30sp"
+        android:textColor="@color/blue" />
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,11 +53,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_height="50sp"
-        android:text="@string/player_2"/>
+        android:text="@string/player_2"
+        android:textSize="30sp"
+        android:textColor="@color/red"/>
     <TextView
+        android:id="@+id/score2"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="0"/>
+        android:text="0"
+        android:textSize="30sp"
+        android:textColor="@color/red"/>
 </RelativeLayout>
