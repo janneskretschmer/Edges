@@ -14,6 +14,13 @@
     <string name="player_1">Spieler 1</string>
     <string name="player_2">Spieler 2</string>
 
+    <string name="again">Neues Spiel</string>
+    <string name="winner">Der Spieler %s hat gewonnen :)</string>
+    <string name="tie">Unentschieden</string>
+    <string name="score">Score:</string>
+    <string name="sum">Gesamt:</string>
+    <string name="highscore">Highscore:</string>
+
     <string name="error_no_name">Bitte gebe deinen Namen ein.</string>
     <string name="error_no_password">Bitte gebe dein Passwort ein.</string>
     <string name="error_no_confirm">Bitte wiederhole dein Passwort.</string>
@@ -29,6 +36,12 @@
     <string name="action_settings">Settings</string>
 
 
-    <!--Levels-->
-
+    <!--Levels, no tabs!-->
+    <string name="level0">NNNNNNNNN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNNNNNNNNN</string>
+    <string name="level1">NNNNNNNNN\nNNNBEBNNN\nNNNENENNN\nNBEBEBNNN\nNENENENNN\nNBEBEBEBN\nNNNENENEN\nNNNBEBEBN\nNNNENENNN\nNNNBEBNNN\nNNNNNNNNN</string>
+    <string name="level2">NNNNNNNNN\nNBEBEBEBN\nNENNNNNEN\nNBNNNNNBN\nNENNNNNEN\nNBNNNBEBN\nNENNNENEN\nNBEBEBEBN\nNENENENNN\nNBEBEBNNN\nNNNNNNNNN</string>
+    <string name="level3">
+        NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN
+    </string>
+    <string name="title_activity_finished">FinishedActivity</string>
 </resources>

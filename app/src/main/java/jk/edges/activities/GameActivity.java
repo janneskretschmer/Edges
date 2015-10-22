@@ -1,6 +1,7 @@
 package jk.edges.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +12,14 @@ import android.view.Window;
 import android.widget.TextView;
 
 import jk.edges.R;
+import jk.edges.model.ItemParent;
 import jk.edges.model.Playground;
 import jk.edges.view.PlaygroundView;
 
 public class GameActivity extends Activity {
     private TextView nameDisplay1,nameDisplay2,scoreDisplay1,scoreDisplay2;
     private Playground playground;
-    private int id1,id2,currentPlayer;
+    private int id1,id2,currentPlayer,claimedEdges,numberOfEdges;
     private String name1,name2;
 
     @Override
@@ -33,7 +35,7 @@ public class GameActivity extends Activity {
 
         playground = new Playground(id1,id2);
 
-        String playgroundString = "NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN";
+        String playgroundString = getString(R.string.level3);//"NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN";
         playground.parse(playgroundString);
 
         nameDisplay1 = (TextView)findViewById(R.id.player1);
@@ -53,33 +55,53 @@ public class GameActivity extends Activity {
         //set Onclick listener
         View[] edges = playgroundView.getEdges();
         if(edges!=null) {
+            numberOfEdges=edges.length;
             for (int i = 0; i < edges.length; i++) {
                 edges[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        playgroundView.updateViews(playground.claim((int)v.getTag(R.dimen.x),(int)v.getTag(R.dimen.y),currentPlayer));
-                        switchPlayer();
+                        //return if already claimed
+                        if(v.getTag(R.dimen.claimed)!=null&&v.getTag(R.dimen.claimed).equals(true))return;
+
+                        playgroundView.updateViews(playground.claim((int) v.getTag(R.dimen.x), (int) v.getTag(R.dimen.y), currentPlayer));
+                        updateScore();
+                        claimedEdges++;
+                        v.setTag(R.dimen.claimed,true);
+                        if(claimedEdges>=numberOfEdges){
+                            Intent intent = new Intent(getApplicationContext(),FinishedActivity.class);
+                            intent.putExtra("id1",id1);
+                            intent.putExtra("id2",id2);
+                            intent.putExtra("name1",name1);
+                            intent.putExtra("name2",name2);
+                            intent.putExtra("score1",playground.getScore1());
+                            intent.putExtra("score2", playground.getScore2());
+                            startActivity(intent);
+                            finish();
+                        }
+                        if(!playground.getAgain())switchPlayer();
                     }
                 });
             }
-        }
+        }else numberOfEdges = 0;
 
         //random start player
         currentPlayer=(Math.random()>0.5)?id1:id2;
         switchPlayer();
     }
 
+    private void updateScore(){
+        scoreDisplay1.setText(playground.getScore1()+"");
+        scoreDisplay2.setText(playground.getScore2()+"");
+    }
     private void switchPlayer(){
         if(currentPlayer == id1){
             currentPlayer=id2;
             nameDisplay2.setTypeface(null, Typeface.BOLD);
             nameDisplay1.setTypeface(null, Typeface.NORMAL);
-            scoreDisplay1.setText(playground.getScore1()+""); //score of "old" player has to be updated
         }else{
             currentPlayer=id1;
             nameDisplay2.setTypeface(null, Typeface.NORMAL);
             nameDisplay1.setTypeface(null, Typeface.BOLD);
-            scoreDisplay2.setText(playground.getScore2()+"");
         }
     }
 }

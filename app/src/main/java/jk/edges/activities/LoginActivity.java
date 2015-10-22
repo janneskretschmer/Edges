@@ -1,6 +1,7 @@
 package jk.edges.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+
 
         dbConnection = new DBConnection(this);
 
@@ -85,6 +87,7 @@ public class LoginActivity extends Activity {
                                 intent.putExtra("name1",name1);
                                 intent.putExtra("name2",userName);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     }

@@ -62,6 +62,8 @@ public class PlaygroundView extends LinearLayout{
             int[] widths = new int[items[0].length];
             int[] heights = new int[items.length];
 
+            Log.d("width",widths.length+"");
+
             //add layouts and get measures of rows and columns
             for (int x = 0;x  < items[0].length; x++) {
                 LinearLayout layout = new LinearLayout(context);
@@ -87,8 +89,9 @@ public class PlaygroundView extends LinearLayout{
                     layoutParams.width = widths[x];
                     layoutParams.height= heights[y];
                     item.setLayoutParams(layoutParams);
-                    item.setTag(R.dimen.x,x);
+                    item.setTag(R.dimen.x, x);
                     item.setTag(R.dimen.y, y);
+                    item.setTag(R.dimen.claimed,false);
 
                     Random rnd = new Random();
                     item.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
@@ -122,6 +125,7 @@ public class PlaygroundView extends LinearLayout{
                         edgeList.add(item);
 
                         if(items[y][x].isClaimed()){
+                            item.setTag(R.dimen.claimed,true);
                             if (items[y][x].getOwner()==id1&&id1>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_blue));
                             else if (items[y][x].getOwner()==id2&&id2>=0)item.setBackgroundColor(getResources().getColor(R.color.edge_red));
                         }else item.setBackgroundColor(getResources().getColor(R.color.gray));
@@ -142,15 +146,11 @@ public class PlaygroundView extends LinearLayout{
                 if(owner == id1)view.setBackgroundColor(getResources().getColor(R.color.edge_blue));
                 else if(owner == id2)view.setBackgroundColor(getResources().getColor(R.color.edge_red));
                 else view.setBackgroundColor(getResources().getColor(R.color.gray));
-                Log.d(owner+"","edge "+view.getTag(R.dimen.x)+" "+view.getTag(R.dimen.y));
-
             }else if(view.getTag(R.dimen.type).equals(Type.Box)){
                 if(owner == id1)view.setBackgroundColor(getResources().getColor(R.color.blue));
                 else if(owner == id2)view.setBackgroundColor(getResources().getColor(R.color.red));
                 else view.setBackgroundColor(getResources().getColor(R.color.light_gray));
-                Log.d(owner+"","box "+view.getTag(R.dimen.x)+" "+view.getTag(R.dimen.y));
             }
-            Log.d("type",view.getTag(R.dimen.type)+"");
         }
     }
 
