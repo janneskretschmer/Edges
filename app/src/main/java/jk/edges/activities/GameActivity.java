@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import jk.edges.R;
+import jk.edges.database.DBConnection;
 import jk.edges.model.ItemParent;
 import jk.edges.model.Playground;
 import jk.edges.view.PlaygroundView;
@@ -68,13 +69,20 @@ public class GameActivity extends Activity {
                         claimedEdges++;
                         v.setTag(R.dimen.claimed,true);
                         if(claimedEdges>=numberOfEdges){
+                            int score1 = playground.getScore1();
+                            int score2 = playground.getScore2();
+
+                            DBConnection dbConnection = new DBConnection(getApplicationContext());
+                            dbConnection.updateScore(id1, score1, score1 > score2);
+                            dbConnection.updateScore(id2, score2, score1 < score2);
+
                             Intent intent = new Intent(getApplicationContext(),FinishedActivity.class);
                             intent.putExtra("id1",id1);
                             intent.putExtra("id2",id2);
                             intent.putExtra("name1",name1);
                             intent.putExtra("name2",name2);
-                            intent.putExtra("score1",playground.getScore1());
-                            intent.putExtra("score2", playground.getScore2());
+                            intent.putExtra("score1",score1);
+                            intent.putExtra("score2", score2);
                             startActivity(intent);
                             finish();
                         }

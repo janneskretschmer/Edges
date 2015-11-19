@@ -9,6 +9,7 @@ package jk.edges.database;
         import java.security.SecureRandom;
         import java.util.ArrayList;
         import java.util.Arrays;
+        import java.util.EnumMap;
         import java.util.HashMap;
         import java.util.Hashtable;
         import java.util.Random;
@@ -100,21 +101,31 @@ public class DBConnection extends SQLiteOpenHelper {
         return id;
     }
 
-    /*public ArrayList<String> getAllCotacts()
-    {
-        ArrayList<String> array_list = new ArrayList<String>();
+    public void updateScore(int id,int score, boolean won){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("UPDATE user SET highscore = CASE WHEN highscore < ? THEN ? ELSE highscore END, sum = sum + ?, won = won + ? WHERE id = ?",
+                new String[]{score + "", score + "", score + "", (won ? "1" : "0"), id + ""});
+        c.moveToFirst();
+        c.close();
+    }
 
-        //hp = new HashMap();
+    public HashMap<String,String> getScoreHistory(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from contacts", null );
+        Cursor res =  db.rawQuery( "SELECT highscore,sum,won FROM user WHERE id = ?", new String[]{id+""} );
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
-            array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
-            res.moveToNext();
+        HashMap<String,String> map = new HashMap<>();
+
+        //if name exists
+        if(!res.isAfterLast()){
+             map.put("highscore", res.getString(res.getColumnIndex(USER_COLUMN_HIGHSCORE)));
+             map.put("sum", res.getString(res.getColumnIndex(USER_COLUMN_SUM)));
+             map.put("won", res.getString(res.getColumnIndex(USER_COLUMN_WON)));
         }
-        return array_list;
-    }*/
+        res.close();
+        return map;
+    }
+
 
     private String hashPassword(String password,String salt){
         password = password+salt;

@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import jk.edges.R;
+import jk.edges.database.DBConnection;
 
 public class FinishedActivity extends Activity {
     private int id1,id2,score1,score2;
     private String name1,name2;
+    private TextView nameDisplay1,nameDisplay2,scoreDisplay1,scoreDisplay2,highscoreDisplay1,highscoreDisplay2,sumDisplay1,sumDisplay2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,22 @@ public class FinishedActivity extends Activity {
         score2 = getIntent().getIntExtra("score2", 0);
         name1 = getIntent().getStringExtra("name1");
         name2 = getIntent().getStringExtra("name2");
+
+
+        ((TextView)findViewById(R.id.name1)).setText(name1);
+        ((TextView)findViewById(R.id.name2)).setText(name2);
+        ((TextView)findViewById(R.id.score1_display)).setText(score1+"");
+        ((TextView)findViewById(R.id.score2_display)).setText(score2+"");
+
+        DBConnection dbConnection = new DBConnection(this);
+        HashMap<String,String> scoreHistory1 = dbConnection.getScoreHistory(id1);
+        ((TextView)findViewById(R.id.highscore1_display)).setText(scoreHistory1.get("highscore"));
+        ((TextView)findViewById(R.id.sum1_display)).setText(scoreHistory1.get("sum"));
+
+        //change for multiplayer
+        HashMap<String,String> scoreHistory2 = dbConnection.getScoreHistory(id2);
+        ((TextView)findViewById(R.id.highscore2_display)).setText(scoreHistory2.get("highscore"));
+        ((TextView)findViewById(R.id.sum1_display)).setText(scoreHistory2.get("sum"));
 
         TextView winner = (TextView)findViewById(R.id.winner);
         if(score1>score2){

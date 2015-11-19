@@ -21,14 +21,129 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="20sp"
-            android:layout_weight="1"
-            android:background="@color/blue"></RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/name1"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"/>
+            <TextView
+                android:id="@+id/score1"
+                android:layout_below="@+id/name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/score"/>
+            <TextView
+                android:id="@+id/highscore1"
+                android:layout_below="@+id/score1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/highscore"/>
+            <TextView
+                android:id="@+id/sum1"
+                android:layout_below="@+id/highscore1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/sum"/>
+            <TextView
+                android:id="@+id/score1_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name1"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/highscore1_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/score1"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/sum1_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/highscore1"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="20sp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/red"></RelativeLayout>
+            >
+            <TextView
+                android:id="@+id/name2"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"/>
+            <TextView
+                android:id="@+id/score2"
+                android:layout_below="@+id/name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/score"/>
+            <TextView
+                android:id="@+id/highscore2"
+                android:layout_below="@+id/score2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/highscore"/>
+            <TextView
+                android:id="@+id/sum2"
+                android:layout_below="@+id/highscore2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"
+                android:text="@string/sum"/>
+            <TextView
+                android:id="@+id/score2_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name2"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/highscore2_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/score2"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/sum2_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/highscore2"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="0"/>
+        </RelativeLayout>
 
     </LinearLayout>
     <Button
@@ -36,6 +151,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/stats"
+        android:layout_marginTop="20sp"
+        android:layout_centerHorizontal="true"
         android:text="@string/again"/>
 
 </RelativeLayout>
