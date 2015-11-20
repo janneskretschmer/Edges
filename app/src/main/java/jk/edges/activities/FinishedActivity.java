@@ -1,6 +1,7 @@
 package jk.edges.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,11 +43,13 @@ public class FinishedActivity extends Activity {
         HashMap<String,String> scoreHistory1 = dbConnection.getScoreHistory(id1);
         ((TextView)findViewById(R.id.highscore1_display)).setText(scoreHistory1.get("highscore"));
         ((TextView)findViewById(R.id.sum1_display)).setText(scoreHistory1.get("sum"));
+        ((TextView)findViewById(R.id.won1_display)).setText(scoreHistory1.get("won"));
 
         //change for multiplayer
         HashMap<String,String> scoreHistory2 = dbConnection.getScoreHistory(id2);
         ((TextView)findViewById(R.id.highscore2_display)).setText(scoreHistory2.get("highscore"));
-        ((TextView)findViewById(R.id.sum1_display)).setText(scoreHistory2.get("sum"));
+        ((TextView)findViewById(R.id.sum2_display)).setText(scoreHistory2.get("sum"));
+        ((TextView)findViewById(R.id.won2_display)).setText(scoreHistory2.get("won"));
 
         TextView winner = (TextView)findViewById(R.id.winner);
         if(score1>score2){
@@ -65,14 +68,31 @@ public class FinishedActivity extends Activity {
         findViewById(R.id.new_game).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),GameActivity.class);
-                intent.putExtra("id1",id1);
-                intent.putExtra("id2",id2);
-                intent.putExtra("name1",name1);
-                intent.putExtra("name2",name2);
-                startActivity(intent);
+                newGame();
+            }
+        });
+
+        findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        newGame();
+    }
+
+    private void newGame(){
+        Intent intent = new Intent(this,GameActivity.class);
+        intent.putExtra("id1",id1);
+        intent.putExtra("id2",id2);
+        intent.putExtra("name1",name1);
+        intent.putExtra("name2",name2);
+        startActivity(intent);
+        finish();
     }
 }

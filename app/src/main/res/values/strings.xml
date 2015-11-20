@@ -10,6 +10,7 @@
     <string name="new_account">Neues Konto</string>
     <string name="create_account">Konto erstellen</string>
     <string name="login_title">Bitte anmelden</string>
+    <string name="logout">Abmelden</string>
 
     <string name="player_1">Spieler 1</string>
     <string name="player_2">Spieler 2</string>
@@ -20,6 +21,7 @@
     <string name="score">Score:</string>
     <string name="sum">Gesamt:</string>
     <string name="highscore">Highscore:</string>
+    <string name="won">Gewonnen:</string>
 
     <string name="error_no_name">Bitte gebe deinen Namen ein.</string>
     <string name="error_no_password">Bitte gebe dein Passwort ein.</string>
@@ -44,4 +46,5 @@
         NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN
     </string>
     <string name="title_activity_finished">FinishedActivity</string>
+    <string name="title_activity_pause">PauseActivity</string>
 </resources>

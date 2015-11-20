@@ -102,9 +102,11 @@ public class DBConnection extends SQLiteOpenHelper {
     }
 
     public void updateScore(int id,int score, boolean won){
+        Log.d(""+id,""+score);
         SQLiteDatabase db = this.getWritableDatabase();
+        //db.execSQL("DELETE FROM user WHERE id = "+id);
         Cursor c = db.rawQuery("UPDATE user SET highscore = CASE WHEN highscore < ? THEN ? ELSE highscore END, sum = sum + ?, won = won + ? WHERE id = ?",
-                new String[]{score + "", score + "", score + "", (won ? "1" : "0"), id + ""});
+                new String[]{score + "", (won ? score : 0) + "", score + "", (won ? "1" : "0"), id + ""});
         c.moveToFirst();
         c.close();
     }
