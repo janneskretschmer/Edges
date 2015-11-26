@@ -2,6 +2,7 @@ package jk.edges.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -81,13 +83,15 @@ public class LoginActivity extends Activity {
                         }else{
                             if(player1==id)error.setText(R.string.error_account_logged_in);
                             else{
+                                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                                 Intent intent = new Intent(getApplicationContext(),GameActivity.class);
                                 intent.putExtra("id1",player1);
                                 intent.putExtra("id2",id);
                                 intent.putExtra("name1",name1);
-                                intent.putExtra("name2",userName);
-                                startActivity(intent);
+                                intent.putExtra("name2", userName);
                                 finish();
+                                startActivity(intent);
                             }
                         }
                     }

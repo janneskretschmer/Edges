@@ -26,6 +26,9 @@ public class PlaygroundView extends LinearLayout{
     private Context context;
     private View[] edges;
 
+    private int edgeWidth = 100;//width of a horizontal edge
+    private int edgeHeight = 40;//height of a horizontal edge
+
 
     public PlaygroundView(Context context) {
         this(context, null);
@@ -49,15 +52,22 @@ public class PlaygroundView extends LinearLayout{
         this.id2 = id2;
     }
 
+    public void setEdgeMeasures(int width,int height){
+        edgeWidth = width;
+        edgeHeight = height;
+    }
+
     public void setPlayground(Playground playground) {
         this.items = playground.getItems();
+    }
+
+    public void reset(){
+        removeAllViews();
     }
 
     public void draw(){
         if(items == null || items.length<1)return;
         if(getChildCount()==0){//add new views to layout
-            int edgeWidth = 100;//width of a horizontal edge
-            int edgeHeight = 40;//height of a horizontal edge
 
             int[] widths = new int[items[0].length];
             int[] heights = new int[items.length];

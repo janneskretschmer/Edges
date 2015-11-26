@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/cancel"
+        android:layout_alignLeft="@+id/cancel"
+        android:gravity="center"
+        android:layout_marginTop="30sp"
+        android:layout_marginBottom="10sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="@string/paused"/>
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:text="@string/cancel_game"/>
+    <Button
+        android:id="@+id/new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cancel"
+        android:layout_alignLeft="@+id/cancel"
+        android:layout_alignRight="@+id/cancel"
+        android:text="@string/again"/>
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_game"
+        android:layout_alignLeft="@+id/cancel"
+        android:layout_alignRight="@+id/cancel"
+        android:text="@string/logout"/>
+
+</RelativeLayout>

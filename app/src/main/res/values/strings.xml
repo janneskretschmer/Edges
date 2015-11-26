@@ -2,6 +2,10 @@
     <string name="app_name">Edges</string>
 
     <string name="back">Zurück</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">OK</string>
+    <string name="icon_forward">\u00BB</string>
+    <string name="icon_back">\u00AB</string>
 
     <string name="login">Login</string>
     <string name="name">Name</string>
@@ -16,6 +20,9 @@
     <string name="player_2">Spieler 2</string>
 
     <string name="again">Neues Spiel</string>
+    <string name="paused">Spiel pausiert</string>
+    <string name="cancel_game">Spiel abbrechen</string>
+
     <string name="winner">Der Spieler %s hat gewonnen :)</string>
     <string name="tie">Unentschieden</string>
     <string name="score">Score:</string>
@@ -39,12 +46,14 @@
 
 
     <!--Levels, no tabs!-->
-    <string name="level0">NNNNNNNNN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNNNNNNNNN</string>
-    <string name="level1">NNNNNNNNN\nNNNBEBNNN\nNNNENENNN\nNBEBEBNNN\nNENENENNN\nNBEBEBEBN\nNNNENENEN\nNNNBEBEBN\nNNNENENNN\nNNNBEBNNN\nNNNNNNNNN</string>
-    <string name="level2">NNNNNNNNN\nNBEBEBEBN\nNENNNNNEN\nNBNNNNNBN\nNENNNNNEN\nNBNNNBEBN\nNENNNENEN\nNBEBEBEBN\nNENENENNN\nNBEBEBNNN\nNNNNNNNNN</string>
-    <string name="level3">
-        NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN
-    </string>
+    <string name="choose_level">Level Auswahl</string>
+    <array name="levels">
+        <item>NNNNNNNNN\nNNNBEBNNN\nNNNENENNN\nNBEBEBNNN\nNENENENNN\nNBEBEBEBN\nNNNENENEN\nNNNBEBEBN\nNNNENENNN\nNNNBEBNNN\nNNNNNNNNN</item>
+        <item>NNNNNNNNN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNENENENEN\nNBEBEBEBN\nNNNNNNNNN</item>
+        <item>NNNNNNNNN\nNBEBEBEBN\nNENNNNNEN\nNBNNNNNBN\nNENNNNNEN\nNBNNNBEBN\nNENNNENEN\nNBEBEBEBN\nNENENENNN\nNBEBEBNNN\nNNNNNNNNN</item>
+        <item>NNNNNNN\nNBEBNNN\nNENENNN\nNBEBEBN\nNNNENEN\nNNNBEBN\nNNNNNNN</item>
+    </array>
+
     <string name="title_activity_finished">FinishedActivity</string>
     <string name="title_activity_pause">PauseActivity</string>
 </resources>
