@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10sp"
         android:text="@string/choose_level"
+        android:textSize="30sp"
         android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/back"
@@ -17,7 +18,7 @@
         android:layout_alignTop="@+id/preview"
         android:layout_alignBottom="@+id/preview"
         android:text="@string/icon_back"
-        android:textSize="25sp"
+        android:textSize="40sp"
         android:gravity="center"/>
     <TextView
         android:id="@+id/forward"
@@ -27,12 +28,12 @@
         android:layout_alignBottom="@+id/preview"
         android:layout_alignParentRight="true"
         android:text="@string/icon_forward"
-        android:textSize="25sp"
+        android:textSize="40sp"
         android:gravity="center"/>
     <jk.edges.view.PlaygroundView
         android:id="@+id/preview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="520px"
         android:layout_toRightOf="@id/back"
         android:layout_toLeftOf="@id/forward"
         android:layout_below="@+id/title"

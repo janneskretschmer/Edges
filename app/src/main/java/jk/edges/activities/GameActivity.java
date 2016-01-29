@@ -39,9 +39,8 @@ public class GameActivity extends Activity {
 
         playground = new Playground(id1,id2);
 
-        String playgroundString = getIntent().getStringExtra("playground");
+        final String playgroundString = getIntent().getStringExtra("playground");
         if(playgroundString==null){
-            //playgroundString = getString(R.string.level3);
             final String[] levels = getResources().getStringArray(R.array.levels);
 
             //level chooser
@@ -71,9 +70,15 @@ public class GameActivity extends Activity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setView(layout)
-                    .setCancelable(false);
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            initPlayground(levels[(Integer)preview.getTag()]);
+                            dialog.dismiss();
+                        }
+                    });
             builder.create().show();
-            //initPlayground(playgroundString);
         }else initPlayground(playgroundString);
     }
 
