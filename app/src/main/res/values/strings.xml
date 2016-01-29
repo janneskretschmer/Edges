@@ -19,6 +19,7 @@
 
     <string name="player_1">Spieler 1</string>
     <string name="player_2">Spieler 2</string>
+    <string name="ki_name">KI</string>
     <string name="ki">Einzelspieler</string>
 
     <string name="again">Neues Spiel</string>

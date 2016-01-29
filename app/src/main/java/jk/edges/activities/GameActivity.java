@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import jk.edges.R;
@@ -23,8 +24,10 @@ import jk.edges.view.PlaygroundView;
 public class GameActivity extends Activity {
     private TextView nameDisplay1,nameDisplay2,scoreDisplay1,scoreDisplay2;
     private Playground playground;
+    private PlaygroundView playgroundView;
     private int id1,id2,currentPlayer,claimedEdges,numberOfEdges;
     private String name1,name2;
+    private boolean singleplayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class GameActivity extends Activity {
 
         id1 = getIntent().getIntExtra("id1", -1);
         id2 = getIntent().getIntExtra("id2", -1);
+        singleplayer= id2 == 0;
         name1 = getIntent().getStringExtra("name1");
         name2 = getIntent().getStringExtra("name2");
 
@@ -68,7 +72,7 @@ public class GameActivity extends Activity {
                 }
             });
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            final AlertDialog dialog = new AlertDialog.Builder(this)
                     .setView(layout)
                     .setCancelable(false)
                     .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
@@ -77,8 +81,17 @@ public class GameActivity extends Activity {
                             initPlayground(levels[(Integer)preview.getTag()]);
                             dialog.dismiss();
                         }
-                    });
-            builder.create().show();
+                    }).create();
+
+            preview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    initPlayground(levels[(Integer)v.getTag()]);
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
         }else initPlayground(playgroundString);
     }
 
@@ -103,7 +116,7 @@ public class GameActivity extends Activity {
         scoreDisplay2 = (TextView)findViewById(R.id.score2);
         scoreDisplay2.setText(playground.getScore2()+"");
 
-        final PlaygroundView playgroundView = (PlaygroundView)findViewById(R.id.playground);
+        playgroundView = (PlaygroundView)findViewById(R.id.playground);
         playgroundView.setPlayground(playground);
         playgroundView.setIds(id1,id2);
         playgroundView.draw();
@@ -116,17 +129,7 @@ public class GameActivity extends Activity {
                 edges[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //return if already claimed
-                        if(v.getTag(R.dimen.claimed)!=null&&v.getTag(R.dimen.claimed).equals(true))return;
-
-                        playgroundView.updateViews(playground.claim((int) v.getTag(R.dimen.x), (int) v.getTag(R.dimen.y), currentPlayer));
-                        updateScore();
-                        claimedEdges++;
-                        v.setTag(R.dimen.claimed,true);
-                        if(claimedEdges>=numberOfEdges){
-                            finishGame();
-                        }
-                        if(!playground.getAgain())switchPlayer();
+                        click(v);
                     }
                 });
             }
@@ -135,6 +138,25 @@ public class GameActivity extends Activity {
         //random start player
         currentPlayer=(Math.random()>0.5)?id1:id2;
         switchPlayer();
+    }
+
+    private void kiTurn(){
+
+
+    }
+
+    private void click(View v){
+        //return if already claimed
+        if(v.getTag(R.dimen.claimed)!=null&&v.getTag(R.dimen.claimed).equals(true))return;
+
+        playgroundView.updateViews(playground.claim((int) v.getTag(R.dimen.x), (int) v.getTag(R.dimen.y), currentPlayer));
+        updateScore();
+        claimedEdges++;
+        v.setTag(R.dimen.claimed,true);
+        if(claimedEdges>=numberOfEdges){
+            finishGame();
+        }
+        if(!playground.getAgain())switchPlayer();
     }
 
     private void finishGame(){

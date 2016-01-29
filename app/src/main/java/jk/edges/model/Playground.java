@@ -108,6 +108,17 @@ public class Playground {
         return items;
     }
 
+    public ArrayList<Point> kiClaim(){
+        //iterate over boxes
+        for(int y=1;y<items.length;y+=2){
+            for(int x=1;x<items[y].length;x+=2){
+                if(items[x][y].getType()==Type.Box){
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * claim an edge
      * @param x

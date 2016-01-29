@@ -16,7 +16,7 @@
         android:text="@string/player_1"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
@@ -25,17 +25,9 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:textSize="20sp"
             android:text="@string/login_title"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ki"/>
-        </LinearLayout>
         <TextView
             android:id="@+id/error"
             android:layout_width="200sp"
@@ -52,6 +44,21 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5px"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ki"
+                android:layout_gravity="center_vertical"/>
+            <CheckBox
+                android:id="@+id/ki"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <Button
             android:id="@+id/login"
             android:layout_width="200sp"

@@ -47,9 +47,26 @@ public class FinishedActivity extends Activity {
 
         //change for multiplayer
         HashMap<String,String> scoreHistory2 = dbConnection.getScoreHistory(id2);
-        ((TextView)findViewById(R.id.highscore2_display)).setText(scoreHistory2.get("highscore"));
-        ((TextView)findViewById(R.id.sum2_display)).setText(scoreHistory2.get("sum"));
-        ((TextView)findViewById(R.id.won2_display)).setText(scoreHistory2.get("won"));
+        TextView highscore2 =(TextView) findViewById(R.id.highscore2_display);
+        if(id2>0)highscore2.setText(scoreHistory2.get("highscore"));
+        else{
+            highscore2.setVisibility(View.GONE);
+            findViewById(R.id.highscore2).setVisibility(View.GONE);
+        }
+
+        TextView sum = (TextView) findViewById(R.id.sum2_display);
+        if(id2>0)sum.setText(scoreHistory2.get("sum"));
+        else{
+            sum.setVisibility(View.GONE);
+            findViewById(R.id.sum2).setVisibility(View.GONE);
+        }
+
+        TextView won = (TextView) findViewById(R.id.won2_display);
+        if(id2>0)won.setText(scoreHistory2.get("won"));
+        else{
+            won.setVisibility(View.GONE);
+            findViewById(R.id.won2).setVisibility(View.GONE);
+        }
 
         TextView winner = (TextView)findViewById(R.id.winner);
         if(score1>score2){
