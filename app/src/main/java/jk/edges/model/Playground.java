@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by janne on 24.09.2015.
@@ -109,13 +110,47 @@ public class Playground {
     }
 
     public ArrayList<Point> kiClaim(){
-        //iterate over boxes
-        for(int y=1;y<items.length;y+=2){
-            for(int x=1;x<items[y].length;x+=2){
-                if(items[x][y].getType()==Type.Box){
+        ArrayList<Box> boxes = new ArrayList<>();
+        //fill boxarray
+        for(int i=0;i<items.length;i++){
+            for(int j=0;j<items[i].length;j++){
+                if(items[i][j]!=null && items[i][j].getType()==Type.Box && !((Box)items[i][j]).isClaimed()){
+                    /* for better AI
+                    try {
+                        Box temp = (Box)items[x][y].clone();
+                        boxes.add(temp);
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }*/
+                    boxes.add((Box)items[i][j]);
                 }
             }
         }
+        Collections.shuffle(boxes);
+        for (Box box : boxes) {
+            if(box.getRemainingEdges()==1){
+                return claimEdgeNextToBox(box.getX(),box.getY());
+            }
+        }
+
+        for (Box box : boxes) {
+            if(box.getRemainingEdges()==3){
+                return claimEdgeNextToBox(box.getX(),box.getY());
+            }
+        }
+
+        if(boxes.size()>0)
+            return claimEdgeNextToBox(boxes.get(0).getX(),boxes.get(0).getY());
+        else
+            return null;
+    }
+
+    private ArrayList<Point> claimEdgeNextToBox(int x,int y){
+        Log.d("KI claimed",x+" "+y);
+        if(y>0&&items[y-1][x]!=null&&items[y-1][x].getType()==Type.Edge&&!items[y-1][x].isClaimed())return claim(x,y-1,0);//upper edge
+        if(y>0&&items[y][x-1]!=null&&items[y][x-1].getType()==Type.Edge&&!items[y][x-1].isClaimed())return claim(x-1,y,0);//left edge
+        if(x+1<items.length&&items[y+1][x]!=null&&items[y+1][x].getType()==Type.Edge&&!items[y+1][x].isClaimed())return claim(x,y+1,0);//lower edge
+        if(x+1<items[y].length&&items[y][x+1]!=null&&items[y][x+1].getType()==Type.Edge&&!items[y][x+1].isClaimed())return claim(x+1,y,0);//right edge
         return null;
     }
 

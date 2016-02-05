@@ -41,7 +41,7 @@ public class NewAccountActivity extends Activity {
         back = (TextView)findViewById(R.id.back);
         error = (TextView)findViewById(R.id.error);
 
-        dbConnection = new DBConnection(this);
+        dbConnection = DBConnection.getInstance(this);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override

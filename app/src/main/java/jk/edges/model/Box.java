@@ -35,7 +35,7 @@ public class Box extends ItemParent {
         this.edgeCount = edgeCount;
     }
 
-    public int getClaimedEdges() {
-        return claimedEdges;
+    public int getRemainingEdges() {
+        return edgeCount - claimedEdges;
     }
 }

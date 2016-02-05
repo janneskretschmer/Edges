@@ -2,6 +2,7 @@ package jk.edges.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        dbConnection = new DBConnection(this);
+        dbConnection = DBConnection.getInstance(this);
 
         //init views
         header = (TextView)findViewById(R.id.header);
@@ -100,7 +101,51 @@ public class LoginActivity extends Activity {
                             resetViews();
                             header.setText(R.string.player_2);
                             header.setTextColor(getResources().getColor(R.color.red));
-                            Log.d("p1",player1+"");
+
+                            if(BluetoothAdapter.getDefaultAdapter()!=null){
+                                Button host = (Button)findViewById(R.id.host);
+                                Button enter = (Button)findViewById(R.id.enter);
+
+                                host.setVisibility(View.VISIBLE);
+                                enter.setVisibility(View.VISIBLE);
+
+                                final Intent intent  = new Intent(getApplicationContext(), BTServerActivity.class);
+                                intent.putExtra("id1", player1);
+                                intent.putExtra("id2", -1);
+                                intent.putExtra("name1", name1);
+                                intent.putExtra("name2", R.string.player_2);
+
+                                host.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        intent.putExtra("host", true);
+                                        finish();
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                enter.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        intent.putExtra("enter",true);
+                                        finish();
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                host.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(),BTServerActivity.class);
+                                        intent.putExtra("id1",player1);
+                                        intent.putExtra("id2",-1);
+                                        intent.putExtra("name1",name1);
+                                        intent.putExtra("name2", R.string.player_2);
+                                        finish();
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
                         }else{
                             if(player1==id&&!ki.isChecked())error.setText(R.string.error_account_logged_in);
                             else{
@@ -110,7 +155,7 @@ public class LoginActivity extends Activity {
                                 intent.putExtra("id1",(id>0&&ki.isChecked())?id:player1);
                                 intent.putExtra("id2",(ki.isChecked())?0:id);
                                 intent.putExtra("name1",(userName.length()>0&&ki.isChecked())?userName:name1);
-                                intent.putExtra("name2", (ki.isChecked()) ? getString(R.string.ki_name):userName);
+                                intent.putExtra("name2", (ki.isChecked()) ? getString(R.string.ki_name) : userName);
                                 finish();
                                 startActivity(intent);
                             }

@@ -39,7 +39,7 @@ public class FinishedActivity extends Activity {
         ((TextView)findViewById(R.id.score1_display)).setText(score1+"");
         ((TextView)findViewById(R.id.score2_display)).setText(score2+"");
 
-        DBConnection dbConnection = new DBConnection(this);
+        DBConnection dbConnection = DBConnection.getInstance(this);
         HashMap<String,String> scoreHistory1 = dbConnection.getScoreHistory(id1);
         ((TextView)findViewById(R.id.highscore1_display)).setText(scoreHistory1.get("highscore"));
         ((TextView)findViewById(R.id.sum1_display)).setText(scoreHistory1.get("sum"));

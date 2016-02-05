@@ -33,11 +33,17 @@ public class DBConnection extends SQLiteOpenHelper {
     public static final String USER_COLUMN_HIGHSCORE = "highscore";
     public static final String USER_COLUMN_SUM = "sum";
     public static final String USER_COLUMN_WON = "won";
+    private static DBConnection instance=null;
     private HashMap hp;
 
-    public DBConnection(Context context)
+    private DBConnection(Context context)
     {
         super(context, DATABASE_NAME , null, 1);
+    }
+
+    public static DBConnection getInstance(Context context){
+        if(instance==null)instance=new DBConnection(context);
+        return instance;
     }
 
     @Override
@@ -104,10 +110,8 @@ public class DBConnection extends SQLiteOpenHelper {
     public void updateScore(int id,int score, boolean won){
         Log.d(""+id,""+score);
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("DELETE FROM user WHERE id = "+id);
         Cursor c = db.rawQuery("UPDATE user SET highscore = CASE WHEN highscore < ? THEN ? ELSE highscore END, sum = sum + ?, won = won + ? WHERE id = ?",
                 new String[]{score + "", (won ? score : 0) + "", score + "", (won ? "1" : "0"), id + ""});
-        c.moveToFirst();
         c.close();
     }
 

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jk.edges" >
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +14,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +24,7 @@
         <activity
             android:name=".activities.NewAccountActivity"
             android:label="@string/title_activity_new_account"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.GameActivity"
@@ -30,6 +34,11 @@
         <activity
             android:name=".activities.FinishedActivity"
             android:label="@string/title_activity_finished"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.BTServerActivity"
+            android:label="@string/title_activity_btserver"
             android:screenOrientation="portrait">
         </activity>
     </application>

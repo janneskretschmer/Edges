@@ -1,5 +1,6 @@
 package jk.edges.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -148,11 +150,12 @@ public class PlaygroundView extends LinearLayout{
     }
 
     public void updateViews(ArrayList<Point> points){
-        //TODO not working!
+        if(points==null)return;
         for (int i = 0; i < points.size(); i++) {
             View view = ((LinearLayout)getChildAt(points.get(i).x)).getChildAt(points.get(i).y);
             int owner = items[(int)view.getTag(R.dimen.y)][(int)view.getTag(R.dimen.x)].getOwner();
             if(view.getTag(R.dimen.type).equals(Type.Edge)){
+                view.setTag(R.dimen.claimed,true);
                 if(owner == id1)view.setBackgroundColor(getResources().getColor(R.color.edge_blue));
                 else if(owner == id2)view.setBackgroundColor(getResources().getColor(R.color.edge_red));
                 else view.setBackgroundColor(getResources().getColor(R.color.gray));
@@ -162,6 +165,43 @@ public class PlaygroundView extends LinearLayout{
                 else view.setBackgroundColor(getResources().getColor(R.color.light_gray));
             }
         }
+    }
+
+    public static View getLevelChooser(Context context){
+        final String[] levels = context.getResources().getStringArray(R.array.levels);
+        View layout = ((Activity)context).getLayoutInflater().inflate(R.layout.dialog_levels, null);
+        final PlaygroundView preview = (PlaygroundView)layout.findViewById(R.id.preview);
+        preview.setTag(0); //save index of chosen level in tag
+        drawPreview(preview, levels[0]);
+
+        layout.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int chosen = (Integer) preview.getTag();
+                if (--chosen < 0) chosen = levels.length - 1;
+                preview.setTag(chosen);
+                drawPreview(preview, levels[chosen]);
+            }
+        });
+        layout.findViewById(R.id.forward).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int chosen = (Integer)preview.getTag();
+                if(++chosen>=levels.length)chosen=0;
+                preview.setTag(chosen);
+                drawPreview(preview, levels[chosen]);
+            }
+        });
+        return layout;
+    }
+
+    private static void drawPreview(PlaygroundView preview, String pgString){
+        Playground pg = new Playground();
+        pg.parse(pgString);
+        preview.setPlayground(pg);
+        preview.setEdgeMeasures(80, 20);
+        preview.reset();
+        preview.draw();
     }
 
     public View[] getEdges() {

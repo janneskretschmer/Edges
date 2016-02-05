@@ -28,6 +28,8 @@ public class GameActivity extends Activity {
     private int id1,id2,currentPlayer,claimedEdges,numberOfEdges;
     private String name1,name2;
     private boolean singleplayer;
+    private boolean host;
+    private boolean enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,36 +43,17 @@ public class GameActivity extends Activity {
         name1 = getIntent().getStringExtra("name1");
         name2 = getIntent().getStringExtra("name2");
 
+        host=getIntent().getBooleanExtra("host",false);
+        enter=getIntent().getBooleanExtra("enter",false);
+
         playground = new Playground(id1,id2);
 
         final String playgroundString = getIntent().getStringExtra("playground");
         if(playgroundString==null){
             final String[] levels = getResources().getStringArray(R.array.levels);
 
-            //level chooser
-            View layout = getLayoutInflater().inflate(R.layout.dialog_levels, null);
+            View layout = PlaygroundView.getLevelChooser(this);
             final PlaygroundView preview = (PlaygroundView)layout.findViewById(R.id.preview);
-            preview.setTag(0); //save index of chosen level in tag
-            drawPreview(preview, levels[0]);
-
-            layout.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int chosen = (Integer) preview.getTag();
-                    if (--chosen < 0) chosen = levels.length - 1;
-                    preview.setTag(chosen);
-                    drawPreview(preview, levels[chosen]);
-                }
-            });
-            layout.findViewById(R.id.forward).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int chosen = (Integer)preview.getTag();
-                    if(++chosen>=levels.length)chosen=0;
-                    preview.setTag(chosen);
-                    drawPreview(preview, levels[chosen]);
-                }
-            });
 
             final AlertDialog dialog = new AlertDialog.Builder(this)
                     .setView(layout)
@@ -93,15 +76,6 @@ public class GameActivity extends Activity {
 
             dialog.show();
         }else initPlayground(playgroundString);
-    }
-
-    private void drawPreview(PlaygroundView preview, String pgString){
-        Playground pg = new Playground();
-        pg.parse(pgString);
-        preview.setPlayground(pg);
-        preview.setEdgeMeasures(80,20);
-        preview.reset();
-        preview.draw();
     }
 
     private void initPlayground(String playgroundString){
@@ -129,7 +103,11 @@ public class GameActivity extends Activity {
                 edges[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        click(v);
+                        //return if already claimed
+                        if(v.getTag(R.dimen.claimed)!=null&&v.getTag(R.dimen.claimed).equals(true))return;
+
+                        playgroundView.updateViews(playground.claim((int) v.getTag(R.dimen.x), (int) v.getTag(R.dimen.y), currentPlayer));
+                        postClick();
                     }
                 });
             }
@@ -141,18 +119,15 @@ public class GameActivity extends Activity {
     }
 
     private void kiTurn(){
-
-
+        do {
+            playgroundView.updateViews(playground.kiClaim());
+            postClick();
+        }while (playground.getAgain()&&claimedEdges<numberOfEdges);
     }
 
-    private void click(View v){
-        //return if already claimed
-        if(v.getTag(R.dimen.claimed)!=null&&v.getTag(R.dimen.claimed).equals(true))return;
-
-        playgroundView.updateViews(playground.claim((int) v.getTag(R.dimen.x), (int) v.getTag(R.dimen.y), currentPlayer));
+    private void postClick(){
         updateScore();
         claimedEdges++;
-        v.setTag(R.dimen.claimed,true);
         if(claimedEdges>=numberOfEdges){
             finishGame();
         }
@@ -163,7 +138,7 @@ public class GameActivity extends Activity {
         int score1 = playground.getScore1();
         int score2 = playground.getScore2();
 
-        DBConnection dbConnection = new DBConnection(getApplicationContext());
+        DBConnection dbConnection = DBConnection.getInstance(getApplicationContext());
         dbConnection.updateScore(id1, score1, score1 > score2);
         dbConnection.updateScore(id2, score2, score1 < score2);
 
@@ -227,6 +202,9 @@ public class GameActivity extends Activity {
             currentPlayer=id1;
             nameDisplay2.setTypeface(null, Typeface.NORMAL);
             nameDisplay1.setTypeface(null, Typeface.BOLD);
+        }
+        if(currentPlayer==0){
+            kiTurn();
         }
     }
 }

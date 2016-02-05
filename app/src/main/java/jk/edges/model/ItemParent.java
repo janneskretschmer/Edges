@@ -3,7 +3,7 @@ package jk.edges.model;
 /**
  * Created by janne on 24.09.2015.
  */
-public abstract class ItemParent {
+public abstract class ItemParent implements Cloneable{
     private int x,y;
     protected int owner;
     private Type type;
@@ -35,5 +35,10 @@ public abstract class ItemParent {
     }
     public int getOwner(){
         return owner;
+    }
+
+    @Override
+    protected ItemParent clone() throws CloneNotSupportedException{
+        return(ItemParent) super.clone();
     }
 }
