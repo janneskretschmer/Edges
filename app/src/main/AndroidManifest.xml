@@ -3,8 +3,8 @@
     package="jk.edges" >
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -37,9 +37,8 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activities.BTServerActivity"
-            android:label="@string/title_activity_btserver"
-            android:screenOrientation="portrait">
+            android:name=".activities.OnlineListActivity"
+            android:label="@string/title_activity_online_list" >
         </activity>
     </application>
 

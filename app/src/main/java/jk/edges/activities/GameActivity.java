@@ -27,9 +27,7 @@ public class GameActivity extends Activity {
     private PlaygroundView playgroundView;
     private int id1,id2,currentPlayer,claimedEdges,numberOfEdges;
     private String name1,name2;
-    private boolean singleplayer;
-    private boolean host;
-    private boolean enter;
+    private boolean singleplayer,online;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,39 +40,41 @@ public class GameActivity extends Activity {
         singleplayer= id2 == 0;
         name1 = getIntent().getStringExtra("name1");
         name2 = getIntent().getStringExtra("name2");
-
-        host=getIntent().getBooleanExtra("host",false);
-        enter=getIntent().getBooleanExtra("enter",false);
+        online = getIntent().getBooleanExtra("online",false);
+        int level = getIntent().getIntExtra("level", -1);
 
         playground = new Playground(id1,id2);
 
         final String playgroundString = getIntent().getStringExtra("playground");
         if(playgroundString==null){
             final String[] levels = getResources().getStringArray(R.array.levels);
+            if(level>=0){
+                initPlayground(levels[level]);
+            }else {
+                View layout = PlaygroundView.getLevelChooser(this);
+                final PlaygroundView preview = (PlaygroundView) layout.findViewById(R.id.preview);
 
-            View layout = PlaygroundView.getLevelChooser(this);
-            final PlaygroundView preview = (PlaygroundView)layout.findViewById(R.id.preview);
+                final AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setView(layout)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                initPlayground(levels[(Integer) preview.getTag()]);
+                                dialog.dismiss();
+                            }
+                        }).create();
 
-            final AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setView(layout)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            initPlayground(levels[(Integer)preview.getTag()]);
-                            dialog.dismiss();
-                        }
-                    }).create();
+                preview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initPlayground(levels[(Integer) v.getTag()]);
+                        dialog.dismiss();
+                    }
+                });
 
-            preview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    initPlayground(levels[(Integer)v.getTag()]);
-                    dialog.dismiss();
-                }
-            });
-
-            dialog.show();
+                dialog.show();
+            }
         }else initPlayground(playgroundString);
     }
 

@@ -65,11 +65,11 @@ public class LoginActivity extends Activity {
         ki.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(player1>=0) {
+                if (player1 >= 0) {
                     if (isChecked) {
                         name.setInputType(InputType.TYPE_NULL);
                         password.setInputType(InputType.TYPE_NULL);
-                    }else{
+                    } else {
                         name.setInputType(InputType.TYPE_CLASS_TEXT);
                         password.setInputType(InputType.TYPE_CLASS_TEXT);
                     }
@@ -102,50 +102,19 @@ public class LoginActivity extends Activity {
                             header.setText(R.string.player_2);
                             header.setTextColor(getResources().getColor(R.color.red));
 
-                            if(BluetoothAdapter.getDefaultAdapter()!=null){
-                                Button host = (Button)findViewById(R.id.host);
-                                Button enter = (Button)findViewById(R.id.enter);
+                            Button enter = (Button)findViewById(R.id.enter);
+                            enter.setVisibility(View.VISIBLE);
 
-                                host.setVisibility(View.VISIBLE);
-                                enter.setVisibility(View.VISIBLE);
-
-                                final Intent intent  = new Intent(getApplicationContext(), BTServerActivity.class);
-                                intent.putExtra("id1", player1);
-                                intent.putExtra("id2", -1);
-                                intent.putExtra("name1", name1);
-                                intent.putExtra("name2", R.string.player_2);
-
-                                host.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        intent.putExtra("host", true);
-                                        finish();
-                                        startActivity(intent);
-                                    }
-                                });
-
-                                enter.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        intent.putExtra("enter",true);
-                                        finish();
-                                        startActivity(intent);
-                                    }
-                                });
-
-                                host.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getApplicationContext(),BTServerActivity.class);
-                                        intent.putExtra("id1",player1);
-                                        intent.putExtra("id2",-1);
-                                        intent.putExtra("name1",name1);
-                                        intent.putExtra("name2", R.string.player_2);
-                                        finish();
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
+                            enter.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final Intent intent  = new Intent(getApplicationContext(), OnlineListActivity.class);
+                                    intent.putExtra("id1", player1);
+                                    intent.putExtra("name1", name1);
+                                    finish();
+                                    startActivity(intent);
+                                }
+                            });
                         }else{
                             if(player1==id&&!ki.isChecked())error.setText(R.string.error_account_logged_in);
                             else{
