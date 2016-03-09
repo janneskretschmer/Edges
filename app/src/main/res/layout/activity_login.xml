@@ -65,6 +65,12 @@
             android:layout_height="wrap_content"
             android:text="@string/login"/>
         <Button
+            android:id="@+id/host"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:text="@string/host"
+            android:visibility="gone"/>
+        <Button
             android:id="@+id/enter"
             android:layout_width="200sp"
             android:layout_height="wrap_content"

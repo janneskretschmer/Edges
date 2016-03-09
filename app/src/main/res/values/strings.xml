@@ -28,6 +28,9 @@
     <string name="paused">Spiel pausiert</string>
     <string name="cancel_game">Spiel abbrechen</string>
 
+    <string name="wait_for_player">Warten auf Mitspieler...</string>
+    <string name="wait_for_move">Warten auf Zug des Mitspielers...</string>
+
     <string name="winner">Der Spieler %s hat gewonnen :)</string>
     <string name="tie">Unentschieden</string>
     <string name="score">Score:</string>

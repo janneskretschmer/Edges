@@ -48,12 +48,15 @@ public class GameArrayAdapter extends ArrayAdapter<String[]> {
                     @Override
                     public void run() {
                         Intent intent;
-                        if (OnlineListActivity.getWebsiteContent("http://janneskretschmer.bplaced.net/congregation/game/?is_game_open=" + game[0]).equals("1")) {
+                        if (OnlineListActivity.getWebsiteContent("http://janneskretschmer.bplaced.net/game/?is_game_open=" + game[0]).equals("1")) {
+                            OnlineListActivity.getWebsiteContent("http://janneskretschmer.bplaced.net/game/?join_game=" + game[0]);
                             intent = new Intent(getContext(), GameActivity.class);
-                            intent.putExtra("id2", -1);
+                            intent.putExtra("id2", 0);
                             intent.putExtra("online", true);
+                            intent.putExtra("host", false);
                             intent.putExtra("name2", getContext().getString(R.string.player_2));
                             intent.putExtra("level", Integer.parseInt(game[1]));
+                            intent.putExtra("game",Integer.parseInt(game[0]));
                         } else {
                             intent = new Intent(getContext(), OnlineListActivity.class);
                         }

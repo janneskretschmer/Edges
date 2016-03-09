@@ -47,7 +47,8 @@ public class OnlineListActivity extends Activity {
             public void run() {
                 try {
                     final ArrayList<String[]> games= new ArrayList<>();
-                    JSONObject json = new JSONObject(getWebsiteContent("http://janneskretschmer.bplaced.net/congregation/game/?list_games"));
+                    Log.d("web",getWebsiteContent("http://janneskretschmer.bplaced.net/game/?list_games"));
+                    JSONObject json = new JSONObject(getWebsiteContent("http://janneskretschmer.bplaced.net/game/?list_games"));
                     Iterator<?> keys = json.keys();
                     while( keys.hasNext() ) {
                         String key = (String)keys.next();

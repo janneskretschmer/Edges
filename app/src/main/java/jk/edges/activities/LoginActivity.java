@@ -105,12 +105,38 @@ public class LoginActivity extends Activity {
                             Button enter = (Button)findViewById(R.id.enter);
                             enter.setVisibility(View.VISIBLE);
 
+                            Button host = (Button)findViewById(R.id.host);
+                            host.setVisibility(View.VISIBLE);
+
                             enter.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    final Intent intent  = new Intent(getApplicationContext(), OnlineListActivity.class);
+                                    //hide keyboard
+                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                                    final Intent intent = new Intent(getApplicationContext(), OnlineListActivity.class);
                                     intent.putExtra("id1", player1);
                                     intent.putExtra("name1", name1);
+                                    finish();
+                                    startActivity(intent);
+                                }
+                            });
+
+                            host.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //hide keyboard
+                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                                    final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                                    intent.putExtra("id1", player1);
+                                    intent.putExtra("id2", 0);
+                                    intent.putExtra("name1", name1);
+                                    intent.putExtra("name2", getString(R.string.player_2));
+                                    intent.putExtra("online",true);
+                                    intent.putExtra("host", true);
                                     finish();
                                     startActivity(intent);
                                 }
@@ -118,8 +144,10 @@ public class LoginActivity extends Activity {
                         }else{
                             if(player1==id&&!ki.isChecked())error.setText(R.string.error_account_logged_in);
                             else{
+                                //hide keyboard
                                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
                                 Intent intent = new Intent(getApplicationContext(),GameActivity.class);
                                 intent.putExtra("id1",(id>0&&ki.isChecked())?id:player1);
                                 intent.putExtra("id2",(ki.isChecked())?0:id);
