@@ -49,7 +49,6 @@ public class Playground {
                 char c = temp[y].charAt(x);
                 if(c=='E'||c=='F'||c=='G'){
                     items[y][x]=new Edge(x,y);
-                    //wegen der folgenden Fallunterscheidung habe ich kein switch genommen
                     if(c=='F'&&id1>-1)((Edge)items[y][x]).claim(id1);
                     else if(c=='G'&&id2>-1)((Edge)items[y][x]).claim(id2);
                 }else if(c=='B'||c=='C'||c=='D'){
@@ -84,6 +83,7 @@ public class Playground {
         }
     }
 
+    //wäre für die Speicherung von Spielen notwendig gewesen
     public String stringify(){
         StringBuffer sb = new StringBuffer();
         for (int y = 0; y < items.length; y++) {
